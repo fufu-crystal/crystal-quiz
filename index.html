@@ -204,21 +204,11 @@
             background: #faf6ef;
         }
         .option-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--accent-light);
+            font-size: 1.4rem;
             flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
-        .option.selected .option-icon {
-            background: var(--accent);
-            color: white;
+            line-height: 1;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
         .option-text { flex: 1; }
         .option-text .label { font-weight: 500; margin-bottom: 1px; font-size: 0.88rem; }
@@ -258,12 +248,23 @@
         .result-summary h4 { margin-bottom: 8px; color: var(--primary); font-size: 0.88rem; }
         .summary-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
         .summary-tag {
-            background: var(--bg);
-            padding: 5px 10px;
-            border-radius: 16px;
-            font-size: 0.73rem;
-            color: var(--text-light);
+            background: linear-gradient(135deg, var(--accent-light), #f0e6d2);
+            border: 1px solid var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: var(--primary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            animation: tagPop 0.4s ease-out;
         }
+        @keyframes tagPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .summary-tag:nth-child(2) { animation-delay: 0.1s; }
+        .summary-tag:nth-child(3) { animation-delay: 0.2s; }
         .result-card {
             background: var(--card-bg);
             border-radius: 14px;
@@ -639,11 +640,11 @@
                 title: '最近一段时间，你感觉最困扰的状态是什么？',
                 desc: '选一个最贴近你当下的',
                 options: [
-                    { icon: 'A', label: '情绪容易波动', desc: '焦虑、内耗、睡不好', value: 'anxiety' },
-                    { icon: 'B', label: '搞不到钱', desc: '收入瓶颈、存不下钱', value: 'money' },
-                    { icon: 'C', label: '事事不顺', desc: '小人多、阻力大', value: 'obstacle' },
-                    { icon: 'D', label: '迷茫没方向', desc: '不知道该往哪走', value: 'lost' },
-                    { icon: 'E', label: '太累了', desc: '身心疲惫、需要休息', value: 'tired' }
+                    { icon: '🌀', label: '情绪容易波动', desc: '焦虑、内耗、睡不好', value: 'anxiety' },
+                    { icon: '', label: '搞不到钱', desc: '收入瓶颈、存不下钱', value: 'money' },
+                    { icon: '🧱', label: '事事不顺', desc: '小人多、阻力大', value: 'obstacle' },
+                    { icon: '😶', label: '迷茫没方向', desc: '不知道该往哪走', value: 'lost' },
+                    { icon: '😫', label: '太累了', desc: '身心疲惫、需要休息', value: 'tired' }
                 ],
                 mapping: {
                     'anxiety': ['purify', 'protect-dark2', 'steady-wealth'],
@@ -659,11 +660,11 @@
                 title: '如果把你的身体比作电池，电量流失最快的时候是？',
                 desc: '哪个场景最让你心累',
                 options: [
-                    { icon: 'A', label: '社交之后', desc: '和人打交道好耗能', value: 'social' },
-                    { icon: 'B', label: '工作/学习时', desc: '一上班就疲惫', value: 'work' },
-                    { icon: 'C', label: '想太多的时候', desc: '内耗、反复纠结', value: 'overthink' },
-                    { icon: 'D', label: '遇到不讲理的人', desc: '被气到不想说话', value: 'angry' },
-                    { icon: 'E', label: '晚上睡不着', desc: '翻来覆去睡不着', value: 'insomnia' }
+                    { icon: '👥', label: '社交之后', desc: '和人打交道好耗能', value: 'social' },
+                    { icon: '💻', label: '工作/学习时', desc: '一上班就疲惫', value: 'work' },
+                    { icon: '🤔', label: '想太多的时候', desc: '内耗、反复纠结', value: 'overthink' },
+                    { icon: '😤', label: '遇到不讲理的人', desc: '被气到不想说话', value: 'angry' },
+                    { icon: '🌙', label: '晚上睡不着', desc: '翻来覆去睡不着', value: 'insomnia' }
                 ],
                 mapping: {
                     'social': ['people', 'purify', 'protect-dark2'],
@@ -679,10 +680,10 @@
                 title: '面对突发问题时，你的第一反应是？',
                 desc: '这反映了你的内在特质',
                 options: [
-                    { icon: 'A', label: '先感受情绪', desc: 'F人 · 在意氛围和他人感受', value: 'F' },
-                    { icon: 'B', label: '先分析利弊', desc: 'T人 · 理性思考最优解', value: 'T' },
-                    { icon: 'C', label: '先想可能性', desc: 'N人 · 跳跃思维找灵感', value: 'N' },
-                    { icon: 'D', label: '先看具体细节', desc: 'S人 · 关注当下和实际', value: 'S' }
+                    { icon: '💭', label: '先感受情绪', desc: 'F人 · 在意氛围和他人感受', value: 'F' },
+                    { icon: '', label: '先分析利弊', desc: 'T人 · 理性思考最优解', value: 'T' },
+                    { icon: '✨', label: '先想可能性', desc: 'N人 · 跳跃思维找灵感', value: 'N' },
+                    { icon: '', label: '先看具体细节', desc: 'S人 · 关注当下和实际', value: 'S' }
                 ],
                 mapping: {
                     'F': ['people', 'purify', 'confidence'],
@@ -697,11 +698,11 @@
                 title: '如果宇宙给你一张"显化支票"，你最想兑换什么？',
                 desc: '想象一下戴上水晶后最理想的画面',
                 options: [
-                    { icon: 'A', label: '钱包鼓鼓', desc: '财富自由、财运亨通', value: 'rich' },
-                    { icon: 'B', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
-                    { icon: 'C', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
-                    { icon: 'D', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' },
-                    { icon: 'E', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
+                    { icon: '💸', label: '钱包鼓鼓', desc: '财富自由、财运亨通', value: 'rich' },
+                    { icon: '', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
+                    { icon: '🛡', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
+                    { icon: '😊', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' },
+                    { icon: '💗', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
                 ],
                 mapping: {
                     'rich': ['wealth-gather', 'confident-wealth', 'protect-wealth', 'steady-wealth'],
@@ -717,10 +718,10 @@
                 title: '你觉得自己现在的"能量场"是什么样的？',
                 desc: '感受一下自己最近的气场',
                 options: [
-                    { icon: 'A', label: '火力全开', desc: '干劲十足，想大干一场', value: 'high' },
-                    { icon: 'B', label: '时起时落', desc: '有时候很猛，有时候很丧', value: 'fluctuate' },
-                    { icon: 'C', label: '昏昏沉沉', desc: '提不起劲，做什么都没动力', value: 'low' },
-                    { icon: 'D', label: '冷静平稳', desc: '情绪稳定，但缺少激情', value: 'calm' }
+                    { icon: '🔥', label: '火力全开', desc: '干劲十足，想大干一场', value: 'high' },
+                    { icon: '🌊', label: '时起时落', desc: '有时候很猛，有时候很丧', value: 'fluctuate' },
+                    { icon: '🌫', label: '昏昏沉沉', desc: '提不起劲，做什么都没动力', value: 'low' },
+                    { icon: '🧊', label: '冷静平稳', desc: '情绪稳定，但缺少激情', value: 'calm' }
                 ],
                 mapping: {
                     'high': ['wealth-gather', 'confident-wealth', 'execution'],
@@ -735,11 +736,11 @@
                 title: '你更偏爱哪种颜色？',
                 desc: '颜色也有能量，选让你舒服的',
                 options: [
-                    { icon: 'A', label: '紫色系', desc: '神秘高贵', value: 'purple' },
-                    { icon: 'B', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
-                    { icon: 'C', label: '透明/白色系', desc: '纯净清爽', value: 'white' },
-                    { icon: 'D', label: '绿色系', desc: '清新自然', value: 'green' },
-                    { icon: 'E', label: '黑色系', desc: '酷感百搭', value: 'black' }
+                    { icon: '💜', label: '紫色系', desc: '神秘高贵', value: 'purple' },
+                    { icon: '', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
+                    { icon: '🤍', label: '透明/白色系', desc: '纯净清爽', value: 'white' },
+                    { icon: '💚', label: '绿色系', desc: '清新自然', value: 'green' },
+                    { icon: '⬛', label: '黑色系', desc: '酷感百搭', value: 'black' }
                 ],
                 mapping: {
                     'purple': ['people'],
@@ -755,11 +756,11 @@
                 title: '凭直觉，选一个此刻最吸引你的词',
                 desc: '不用想，选第一个跳出来的',
                 options: [
-                    { icon: 'A', label: '流动', desc: '顺势而为、不费力', value: 'flow' },
-                    { icon: 'B', label: '燃烧', desc: '充满能量、想突破', value: 'burn' },
-                    { icon: 'C', label: '生长', desc: '慢慢变好、向上', value: 'grow' },
-                    { icon: 'D', label: '稳定', desc: '扎根当下、不摇摆', value: 'stable' },
-                    { icon: 'E', label: '闪耀', desc: '被看见、发光发热', value: 'shine' }
+                    { icon: '🌊', label: '流动', desc: '顺势而为、不费力', value: 'flow' },
+                    { icon: '🔥', label: '燃烧', desc: '充满能量、想突破', value: 'burn' },
+                    { icon: '', label: '生长', desc: '慢慢变好、向上', value: 'grow' },
+                    { icon: '🪨', label: '稳定', desc: '扎根当下、不摇摆', value: 'stable' },
+                    { icon: '✨', label: '闪耀', desc: '被看见、发光发热', value: 'shine' }
                 ],
                 mapping: {
                     'flow': ['purify', 'people', 'steady-wealth'],
@@ -909,8 +910,11 @@
 
             // 获取用户画像
             const troubleLabels = { 'anxiety': '情绪敏感', 'money': '求财心切', 'obstacle': '阻力较大', 'lost': '方向迷茫', 'tired': '身心疲惫' };
+            const troubleIcons = { 'anxiety': '🌀', 'money': '💸', 'obstacle': '🧱', 'lost': '😶', 'tired': '😫' };
             const wishLabels = { 'rich': '求财富', 'success': '求事业', 'safe': '求护身', 'happy': '求开心', 'love': '求人缘' };
+            const wishIcons = { 'rich': '💰', 'success': '🚀', 'safe': '🛡', 'happy': '😊', 'love': '💗' };
             const mbtiLabels = { 'F': '感性F人', 'T': '理性T人', 'N': '直觉N人', 'S': '实感S人' };
+            const mbtiIcons = { 'F': '💭', 'T': '', 'N': '✨', 'S': '' };
 
             const resultContainer = document.getElementById('result');
             resultContainer.innerHTML = `
@@ -922,7 +926,11 @@
                     <div class="result-summary">
                         <h4>你的能量画像</h4>
                         <div class="summary-tags">
-                            ${[troubleLabels[answers['trouble']], mbtiLabels[answers['mbti']], wishLabels[answers['wish']]].filter(t => t).map(t => `<span class="summary-tag">${t}</span>`).join('')}
+                            ${[
+                                { icon: troubleIcons[answers['trouble']] || '', text: troubleLabels[answers['trouble']] },
+                                { icon: mbtiIcons[answers['mbti']] || '', text: mbtiLabels[answers['mbti']] },
+                                { icon: wishIcons[answers['wish']] || '', text: wishLabels[answers['wish']] }
+                            ].filter(t => t.text).map(t => `<span class="summary-tag">${t.icon} ${t.text}</span>`).join('')}
                         </div>
                     </div>
                     ${topProducts.map((p, i) => `
