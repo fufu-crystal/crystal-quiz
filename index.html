@@ -609,7 +609,7 @@
         const questions = [
             {
                 id: 'trouble',
-                emoji: '😮‍',
+                emoji: '😲',
                 title: '最近一段时间，你感觉最困扰的状态是什么？',
                 desc: '选一个最贴近你当下的',
                 options: [
@@ -883,7 +883,7 @@
 
             // 获取用户画像
             const troubleLabels = { 'anxiety': '情绪敏感', 'money': '求财心切', 'obstacle': '阻力较大', 'lost': '方向迷茫', 'tired': '身心疲惫' };
-            const wishLabels = { 'love': '求人缘', 'wealth': '求财富', 'relax': '求松弛', 'shield': '求护身' };
+            const wishLabels = { 'rich': '求财富', 'success': '求事业', 'safe': '求护身', 'happy': '求开心', 'love': '求人缘' };
             const mbtiLabels = { 'F': '感性F人', 'T': '理性T人', 'N': '直觉N人', 'S': '实感S人' };
 
             const resultContainer = document.getElementById('result');
@@ -896,9 +896,7 @@
                     <div class="result-summary">
                         <h4>你的能量画像</h4>
                         <div class="summary-tags">
-                            <span class="summary-tag">${troubleLabels[answers['trouble']] || ''}</span>
-                            <span class="summary-tag">${mbtiLabels[answers['mbti']] || ''}</span>
-                            <span class="summary-tag">${wishLabels[answers['wish']] || ''}</span>
+                            ${[troubleLabels[answers['trouble']], mbtiLabels[answers['mbti']], wishLabels[answers['wish']]].filter(t => t).map(t => `<span class="summary-tag">${t}</span>`).join('')}
                         </div>
                     </div>
                     ${topProducts.map((p, i) => `
