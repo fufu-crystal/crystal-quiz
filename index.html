@@ -397,14 +397,12 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <span class="brand">FUFU来财</span>
         </div>
 
         <!-- Landing Page -->
         <div id="landing" class="page active">
             <div class="landing">
                 <img class="logo-big" src="logo.jpg" alt="FUFU来财">
-                <div class="brand-big">FUFU来财</div>
                 <div class="tagline">用对水晶，好运自来</div>
                 <div class="benefits">
                     <div class="item">
@@ -424,7 +422,7 @@
                         <span>提升自信，找回内心松弛感</span>
                     </div>
                 </div>
-                <div class="hint">🔮 8 道题，找到最适合你的那一款</div>
+                <div class="hint">🔮 7 道题，找到最适合你的那一款</div>
                 <button class="btn" onclick="startQuiz()">开始测水晶</button>
             </div>
         </div>
@@ -640,19 +638,21 @@
             {
                 id: 'wish',
                 emoji: '💫',
-                title: '如果宇宙现在给你一张"显化支票"，你希望兑换什么？',
-                desc: '选你最渴望的一项',
+                title: '如果宇宙给你一张"显化支票"，你最想兑换什么？',
+                desc: '想象一下戴上水晶后最理想的画面',
                 options: [
-                    { icon: '💕', label: '桃花/人缘', desc: '优质关系、被人喜欢', value: 'love' },
-                    { icon: '💰', label: '钱/事业', desc: '财富自由、事业有成', value: 'wealth' },
-                    { icon: '🧘', label: '松弛感', desc: '内心平静、不焦虑', value: 'relax' },
-                    { icon: '🛡️', label: '气场/护盾', desc: '百毒不侵、小人退散', value: 'shield' }
+                    { icon: '💸', label: '钱包鼓鼓', desc: '财富自由、财运亨通', value: 'rich' },
+                    { icon: '🚀', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
+                    { icon: '🛡️', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
+                    { icon: '😊', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' },
+                    { icon: '💕', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
                 ],
                 mapping: {
-                    'love': ['people', 'confidence', 'wealth-noble'],
-                    'wealth': ['wealth-gather', 'confident-wealth', 'career', 'protect-wealth'],
-                    'relax': ['purify', 'steady-wealth', 'people'],
-                    'shield': ['protect-dark1', 'protect-dark2', 'protect-wealth']
+                    'rich': ['wealth-gather', 'confident-wealth', 'protect-wealth', 'steady-wealth'],
+                    'success': ['career', 'wealth-noble', 'execution'],
+                    'safe': ['protect-dark1', 'protect-dark2', 'purify'],
+                    'happy': ['confidence', 'purify', 'people'],
+                    'love': ['people', 'confidence', 'wealth-noble']
                 }
             },
             {
@@ -691,24 +691,6 @@
                     'white': ['purify', 'career', 'steady-wealth'],
                     'green': ['wealth-noble', 'career'],
                     'black': ['protect-dark1', 'protect-dark2', 'protect-wealth']
-                }
-            },
-            {
-                id: 'dream',
-                emoji: '🌟',
-                title: '戴上水晶后，你希望生活发生什么改变？',
-                desc: '想象一下最理想的画面',
-                options: [
-                    { icon: '💸', label: '钱包鼓鼓', desc: '收入增加、财运亨通', value: 'rich' },
-                    { icon: '🚀', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
-                    { icon: '🛡️', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
-                    { icon: '😊', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' }
-                ],
-                mapping: {
-                    'rich': ['wealth-gather', 'confident-wealth', 'protect-wealth', 'steady-wealth'],
-                    'success': ['career', 'wealth-noble', 'execution'],
-                    'safe': ['protect-dark1', 'protect-dark2', 'purify'],
-                    'happy': ['confidence', 'purify', 'people']
                 }
             },
             {
@@ -874,7 +856,7 @@
                 <div class="result">
                     <div class="result-header">
                         <h2>你的专属水晶已找到</h2>
-                        <p>根据 8 道题的测试结果</p>
+                        <p>根据 7 道题的测试结果</p>
                     </div>
                     <div class="result-summary">
                         <h4>你的能量画像</h4>
