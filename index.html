@@ -291,6 +291,77 @@
             color: var(--text-light);
         }
 
+        /* Loading / Animation Page */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--primary);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .loading-overlay.active { display: flex; }
+        .loading-overlay .crystal-ball {
+            font-size: 4rem;
+            animation: bounce 0.6s ease-in-out infinite alternate;
+        }
+        .loading-overlay .blessing-text {
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-top: 16px;
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+        .loading-overlay .sub-text {
+            font-size: 0.85rem;
+            color: var(--accent-light);
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+        .loading-overlay .sparkles {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: float 2s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        .loading-overlay .sparkles:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .loading-overlay .sparkles:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.3s; }
+        .loading-overlay .sparkles:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 0.6s; }
+        .loading-overlay .sparkles:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 0.9s; }
+        .loading-overlay .sparkles:nth-child(5) { top: 40%; left: 5%; animation-delay: 1.2s; }
+        .loading-overlay .sparkles:nth-child(6) { top: 35%; right: 8%; animation-delay: 1.5s; }
+        .progress-bar-loading {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+        .progress-bar-loading .fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(-20px) scale(1.1); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
+        }
+
         /* Desktop styles */
         @media (min-width: 768px) {
             .container { padding: 0 24px 60px; }
@@ -326,7 +397,6 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <img src="logo.jpg" alt="FUFU来财">
             <span class="brand">FUFU来财</span>
         </div>
 
@@ -376,6 +446,22 @@
 
         <!-- Result Page -->
         <div id="result" class="page"></div>
+    </div>
+
+    <!-- Loading Animation Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <span class="sparkles">✨</span>
+        <span class="sparkles">🔮</span>
+        <span class="sparkles">💫</span>
+        <span class="sparkles">🌟</span>
+        <span class="sparkles">⭐</span>
+        <span class="sparkles">🌙</span>
+        <div class="crystal-ball" id="crystalEmoji">🔮</div>
+        <div class="blessing-text" id="blessingText">正在加持...</div>
+        <div class="sub-text" id="subText">水晶正在为你注入能量</div>
+        <div class="progress-bar-loading">
+            <div class="fill" id="loadingFill"></div>
+        </div>
     </div>
 
     <script>
@@ -719,6 +805,45 @@
         }
 
         function showResult() {
+            // Show loading animation first
+            showLoadingAnimation();
+        }
+
+        function showLoadingAnimation() {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('active');
+
+            const blessings = [
+                { emoji: '🔮', text: '正在开光...', sub: '水晶灵性已激活' },
+                { emoji: '✨', text: '正在加持...', sub: '为你注入正能量' },
+                { emoji: '🙏', text: '正在祈福...', sub: '加持好运Buff' },
+                { emoji: '💫', text: '能量加载中...', sub: '水晶与你正在共振' },
+                { emoji: '🌟', text: '即将完成...', sub: '你的专属水晶已找到' }
+            ];
+
+            let step = 0;
+            const totalSteps = blessings.length;
+            const interval = 600; // ms per step
+
+            const updateBlessing = () => {
+                if (step < totalSteps) {
+                    document.getElementById('crystalEmoji').textContent = blessings[step].emoji;
+                    document.getElementById('blessingText').textContent = blessings[step].text;
+                    document.getElementById('subText').textContent = blessings[step].sub;
+                    document.getElementById('loadingFill').style.width = ((step + 1) / totalSteps * 100) + '%';
+                    step++;
+                    setTimeout(updateBlessing, interval);
+                } else {
+                    // Animation done, show actual results
+                    overlay.classList.remove('active');
+                    renderResultPage();
+                }
+            };
+
+            updateBlessing();
+        }
+
+        function renderResultPage() {
             document.getElementById('quiz').classList.remove('active');
             document.getElementById('result').classList.add('active');
 
