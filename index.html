@@ -57,53 +57,61 @@
         }
 
         /* Landing Page */
-        .landing { text-align: center; padding-top: 8px; }
+        .landing { text-align: center; padding-top: 20px; display: flex; flex-direction: column; align-items: center; }
         .landing .logo-big {
-            width: 120px;
+            width: 140px;
             height: auto;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+            margin-bottom: 16px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
         }
         .landing .brand-big {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
             letter-spacing: 3px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
         .landing .tagline {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--accent);
             font-weight: 500;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             letter-spacing: 1px;
+        }
+        .landing .intro {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 300px;
         }
         .landing .benefits {
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 18px 16px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow);
+            width: 100%;
         }
         .landing .benefits .item {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 8px 0;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text);
         }
         .landing .benefits .item:not(:last-child) {
             border-bottom: 1px solid #f0ece7;
         }
         .landing .benefits .item .icon {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             flex-shrink: 0;
         }
         .landing .hint {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-light);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         .btn {
             display: inline-block;
@@ -460,7 +468,12 @@
         <div id="landing" class="page active">
             <div class="landing">
                 <img class="logo-big" src="logo.jpg" alt="FUFU来财">
+                <div class="brand-big">FUFU来财</div>
                 <div class="tagline">用对水晶，好运自来</div>
+                <div class="intro">
+                    每一颗水晶都有独特的能量<br>
+                    回答几道小问题，帮你找到最适合的那一款
+                </div>
                 <div class="benefits">
                     <div class="item">
                         <span class="icon">💰</span>
@@ -479,7 +492,7 @@
                         <span>提升自信，找回内心松弛感</span>
                     </div>
                 </div>
-                <div class="hint">🔮 7 道题，找到最适合你的那一款</div>
+                <div class="hint">🔮 5 道小问题，约 1 分钟完成</div>
                 <button class="btn" onclick="startQuiz()">开始测水晶</button>
             </div>
         </div>
@@ -678,7 +691,8 @@
                 id: 'mbti',
                 emoji: '🧠',
                 title: '面对突发问题时，你的第一反应是？',
-                desc: '这反映了你的内在特质',
+                desc: '这反映了你的内在特质 【可多选】',
+                multiSelect: true,
                 options: [
                     { icon: '💭', label: '先感受情绪', desc: 'F人 · 在意氛围和他人感受', value: 'F' },
                     { icon: '📊', label: '先分析利弊', desc: 'T人 · 理性思考最优解', value: 'T' },
@@ -729,29 +743,6 @@
                     'fluctuate': ['steady-wealth', 'purify', 'protect-wealth'],
                     'low': ['confidence', 'execution', 'career'],
                     'calm': ['wealth-noble', 'steady-wealth', 'people']
-                }
-            },
-            {
-                id: 'color',
-                emoji: '🎨',
-                title: '你更偏爱哪种颜色？',
-                desc: '颜色也有能量，选让你舒服的 【可多选】',
-                multiSelect: true,
-                options: [
-                    { icon: '💜', label: '紫色系', desc: '神秘高贵', value: 'purple' },
-                    { icon: '💛', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
-                    { icon: '🤍', label: '透明/白色系', desc: '纯净清爽', value: 'white' },
-                    { icon: '💚', label: '绿色系', desc: '清新自然', value: 'green' },
-                    { icon: '💙', label: '蓝色系', desc: '沉稳冷静', value: 'blue' },
-                    { icon: '🖤', label: '黑色系', desc: '酷感百搭', value: 'black' }
-                ],
-                mapping: {
-                    'purple': ['people'],
-                    'yellow': ['wealth-gather', 'confident-wealth', 'execution'],
-                    'white': ['purify', 'career', 'steady-wealth'],
-                    'green': ['wealth-noble', 'career'],
-                    'blue': ['purify', 'protect-dark2', 'steady-wealth'],
-                    'black': ['protect-dark1', 'protect-dark2', 'protect-wealth']
                 }
             },
             {
@@ -963,7 +954,7 @@
                 <div class="result">
                     <div class="result-header">
                         <h2>你的专属水晶已找到</h2>
-                        <p>根据 7 道题的测试结果</p>
+                        <p>根据 5 道题的测试结果</p>
                     </div>
                     <div class="result-summary">
                         <h4>你的能量画像</h4>
