@@ -716,7 +716,8 @@
                 id: 'energy',
                 emoji: '⚡',
                 title: '你觉得自己现在的"能量场"是什么样的？',
-                desc: '感受一下自己最近的气场',
+                desc: '感受一下自己最近的气场 【可多选】',
+                multiSelect: true,
                 options: [
                     { icon: '🔥', label: '火力全开', desc: '干劲十足，想大干一场', value: 'high' },
                     { icon: '🌊', label: '时起时落', desc: '有时候很猛，有时候很丧', value: 'fluctuate' },
@@ -734,7 +735,8 @@
                 id: 'color',
                 emoji: '🎨',
                 title: '你更偏爱哪种颜色？',
-                desc: '颜色也有能量，选让你舒服的',
+                desc: '颜色也有能量，选让你舒服的 【可多选】',
+                multiSelect: true,
                 options: [
                     { icon: '💜', label: '紫色系', desc: '神秘高贵', value: 'purple' },
                     { icon: '💛', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
@@ -774,7 +776,7 @@
 
         // ========== 逻辑控制区 ==========
         let currentQuestion = 0;
-        let answers = {};
+        let answers = {}; // single-select: { qId: value }, multi-select: { qId: [value1, value2] }
 
         function startQuiz() {
             document.getElementById('landing').classList.remove('active');
@@ -789,6 +791,8 @@
             document.getElementById('progressText').textContent = `${currentQuestion + 1} / ${questions.length}`;
 
             const container = document.getElementById('questionContainer');
+            const currentAnswers = answers[q.id] || (q.multiSelect ? [] : null);
+
             container.innerHTML = `
                 <div class="question-card">
                     <div class="question-top">
@@ -800,30 +804,49 @@
                     </div>
                     <div class="question-desc">${q.desc}</div>
                     <div class="options">
-                        ${q.options.map((opt) => `
-                            <div class="option ${answers[q.id] === opt.value ? 'selected' : ''}" onclick="selectOption('${q.id}', '${opt.value}', this)">
+                        ${q.options.map((opt) => {
+                            const isSelected = q.multiSelect
+                                ? (currentAnswers || []).includes(opt.value)
+                                : currentAnswers === opt.value;
+                            return `<div class="option ${isSelected ? 'selected' : ''}" onclick="selectOption('${q.id}', '${opt.value}', this, ${q.multiSelect})">
                                 <div class="option-icon">${opt.icon}</div>
                                 <div class="option-text">
                                     <div class="label">${opt.label}</div>
                                     <div class="desc">${opt.desc}</div>
                                 </div>
-                            </div>
-                        `).join('')}
+                            </div>`;
+                        }).join('')}
                     </div>
                 </div>
             `;
 
             document.getElementById('prevBtn').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
             const nextBtn = document.getElementById('nextBtn');
-            nextBtn.disabled = !answers[q.id];
+            const hasAnswer = q.multiSelect ? (currentAnswers && currentAnswers.length > 0) : !!currentAnswers;
+            nextBtn.disabled = !hasAnswer;
             nextBtn.textContent = currentQuestion === questions.length - 1 ? '查看结果' : '下一题';
         }
 
-        function selectOption(questionId, value, element) {
-            answers[questionId] = value;
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            document.getElementById('nextBtn').disabled = false;
+        function selectOption(questionId, value, element, isMulti) {
+            if (isMulti) {
+                // Multi-select: toggle value in array
+                if (!answers[questionId]) answers[questionId] = [];
+                const idx = answers[questionId].indexOf(value);
+                if (idx > -1) {
+                    answers[questionId].splice(idx, 1);
+                    element.classList.remove('selected');
+                } else {
+                    answers[questionId].push(value);
+                    element.classList.add('selected');
+                }
+                document.getElementById('nextBtn').disabled = answers[questionId].length === 0;
+            } else {
+                // Single-select: replace value
+                answers[questionId] = value;
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+                document.getElementById('nextBtn').disabled = false;
+            }
         }
 
         function nextQuestion() {
@@ -905,9 +928,13 @@
 
             questions.forEach(q => {
                 const answer = answers[q.id];
-                const matched = q.mapping[answer] || [];
-                matched.forEach(productId => {
-                    scores[productId] = (scores[productId] || 0) + 1;
+                // Handle both single value and array (multi-select)
+                const answerList = Array.isArray(answer) ? answer : [answer];
+                answerList.forEach(a => {
+                    const matched = q.mapping[a] || [];
+                    matched.forEach(productId => {
+                        scores[productId] = (scores[productId] || 0) + 1;
+                    });
                 });
             });
 
@@ -927,7 +954,7 @@
             const wishLabels = { 'rich': '求财富', 'success': '求事业', 'safe': '求护身', 'happy': '求开心', 'love': '求人缘' };
             const wishIcons = { 'rich': '💰', 'success': '🚀', 'safe': '🛡', 'happy': '😊', 'love': '💗' };
             const mbtiLabels = { 'F': '感性F人', 'T': '理性T人', 'N': '直觉N人', 'S': '实感S人' };
-            const mbtiIcons = { 'F': '💭', 'T': '', 'N': '✨', 'S': '' };
+            const mbtiIcons = { 'F': '💭', 'T': '📊', 'N': '✨', 'S': '📋' };
 
             const resultContainer = document.getElementById('result');
             resultContainer.innerHTML = `
