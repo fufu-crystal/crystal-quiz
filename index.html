@@ -885,6 +885,9 @@
             // 存储所有商品供折叠使用
             window._restProducts = restProducts;
 
+            // 记录用户答题数据到 localStorage
+            saveQuizRecord(answers, topProducts);
+
             // 获取用户画像
             const troubleLabels = { 'anxiety': '情绪敏感', 'money': '求财心切', 'obstacle': '阻力较大', 'lost': '方向迷茫', 'tired': '身心疲惫' };
             const wishLabels = { 'rich': '求财富', 'success': '求事业', 'safe': '求护身', 'happy': '求开心', 'love': '求人缘' };
@@ -937,8 +940,60 @@
                     <div class="share-tip">
                         分享给朋友，一起找到专属水晶吧 💎
                     </div>
+                    <div style="margin-top: 12px; text-align: center;">
+                        <span style="font-size: 0.7rem; color: var(--text-light); cursor: pointer;" onclick="showRecords()">📋 查看答题记录</span>
+                    </div>
                 </div>
             `;
+        }
+
+        function saveQuizRecord(answers, topProducts) {
+            try {
+                const record = {
+                    timestamp: new Date().toISOString(),
+                    answers: {},
+                    top3: topProducts.map(p => p.name)
+                };
+                // 记录每道题的题目ID和用户选择的值
+                questions.forEach(q => {
+                    const answerValue = answers[q.id];
+                    const option = q.options.find(o => o.value === answerValue);
+                    record.answers[q.id] = {
+                        question: q.title,
+                        answer: option ? option.label : answerValue
+                    };
+                });
+
+                // 读取已有记录，追加新记录
+                const records = JSON.parse(localStorage.getItem('fufu_quiz_records') || '[]');
+                records.push(record);
+                localStorage.setItem('fufu_quiz_records', JSON.stringify(records));
+            } catch (e) {
+                console.log('记录保存失败:', e);
+            }
+        }
+
+        function getQuizRecords() {
+            try {
+                return JSON.parse(localStorage.getItem('fufu_quiz_records') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function showRecords() {
+            const records = getQuizRecords();
+            if (records.length === 0) {
+                alert('暂无答题记录');
+                return;
+            }
+            const latest = records[records.length - 1];
+            let msg = `最近一次答题 (${new Date(latest.timestamp).toLocaleString('zh-CN')})\n\n`;
+            msg += `推荐结果: ${latest.top3.join('、')}\n\n`;
+            Object.entries(latest.answers).forEach(([key, val]) => {
+                msg += `${val.question}\n→ ${val.answer}\n\n`;
+            });
+            alert(msg);
         }
 
         function restart() {
