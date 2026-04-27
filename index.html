@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晶石甄选 - 你的专属手串推荐</title>
+    <style>
+        :root {
+            --primary: #8B5CF6;
+            --primary-light: #C4B5FD;
+            --bg: #FAF5FF;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --card-bg: #FFFFFF;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #FAF5FF 0%, #EDE9FE 100%);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 20px 16px;
+            min-height: 100vh;
+        }
+
+        /* Mobile first - default styles are for mobile */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Landing Page */
+        .landing { text-align: center; padding-top: 40px; }
+        .landing h1 {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .landing .subtitle {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+        }
+        .landing .crystal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+        .landing .intro-text {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow);
+            text-align: left;
+        }
+        .landing .intro-text p {
+            margin-bottom: 12px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+            width: 100%;
+            max-width: 280px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+        .btn:active { transform: translateY(0); }
+
+        /* Progress Bar */
+        .progress { margin-bottom: 20px; }
+        .progress-bar {
+            height: 6px;
+            background: var(--primary-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        /* Question Page */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px 16px;
+            box-shadow: var(--shadow);
+        }
+        .question-num {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option {
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .option:hover { border-color: var(--primary-light); }
+        .option:active { transform: scale(0.98); }
+        .option.selected {
+            border-color: var(--primary);
+            background: #F3E8FF;
+        }
+        .option-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .option-text { flex: 1; }
+        .option-text .label { font-weight: 500; margin-bottom: 2px; font-size: 0.95rem; }
+        .option-text .desc { font-size: 0.8rem; color: var(--text-light); }
+        .nav-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 12px;
+        }
+        .btn-secondary {
+            background: white;
+            color: var(--text);
+            border: 2px solid #E5E7EB;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+        }
+        .btn-secondary:hover { border-color: var(--primary-light); }
+        .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .nav-btns .btn { flex: 1.5; }
+
+        /* Result Page */
+        .result { text-align: center; }
+        .result-header { margin-bottom: 20px; }
+        .result-header h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 6px; }
+        .result-header p { color: var(--text-light); font-size: 0.9rem; }
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 14px;
+            text-align: left;
+        }
+        .result-card.featured {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+        }
+        .result-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .result-card .tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: auto;
+        }
+        .result-card .meaning {
+            color: var(--primary);
+            font-weight: 500;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .result-card .desc {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .result-card .price { font-weight: 600; color: var(--text); }
+        .result-card .price span { color: var(--primary); font-size: 1rem; }
+        .result-summary {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .result-summary h4 { margin-bottom: 10px; color: var(--primary); font-size: 1rem; }
+        .summary-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .summary-tag {
+            background: var(--bg);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        .share-tip {
+            background: #FEF3C7;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #92400E;
+        }
+
+        /* Tablet and Desktop styles */
+        @media (min-width: 768px) {
+            .container { padding: 40px 24px; }
+            .landing { padding-top: 80px; }
+            .landing h1 { font-size: 2.5rem; }
+            .landing .subtitle { font-size: 1.1rem; margin-bottom: 48px; }
+            .landing .crystal-icon { font-size: 5rem; margin-bottom: 24px; }
+            .landing .intro-text { padding: 32px; border-radius: 20px; }
+            .landing .intro-text p { font-size: 1.05rem; }
+            .btn { padding: 16px 56px; font-size: 1.15rem; width: auto; }
+            .progress { margin-bottom: 32px; }
+            .progress-bar { height: 8px; }
+            .progress-text { font-size: 0.95rem; margin-top: 8px; }
+            .question-card { padding: 32px; border-radius: 20px; }
+            .question-num { font-size: 0.9rem; margin-bottom: 8px; }
+            .question-title { font-size: 1.5rem; margin-bottom: 28px; }
+            .options { gap: 14px; }
+            .option { padding: 18px; border-radius: 14px; }
+            .option-icon { font-size: 1.75rem; }
+            .option-text .label { font-size: 1rem; }
+            .option-text .desc { font-size: 0.9rem; }
+            .nav-btns { margin-top: 28px; gap: 16px; }
+            .btn-secondary { padding: 14px 28px; font-size: 1rem; }
+            .result-header { margin-bottom: 32px; }
+            .result-header h2 { font-size: 1.8rem; }
+            .result-header p { font-size: 1rem; }
+            .result-card { padding: 28px; border-radius: 20px; margin-bottom: 18px; }
+            .result-card h3 { font-size: 1.3rem; }
+            .result-card .meaning { font-size: 1rem; margin: 14px 0; }
+            .result-card .desc { font-size: 0.95rem; margin-bottom: 14px; }
+            .result-card .price span { font-size: 1.15rem; }
+            .result-summary { padding: 24px; border-radius: 18px; margin-bottom: 28px; }
+            .result-summary h4 { font-size: 1.1rem; margin-bottom: 14px; }
+            .summary-tag { padding: 8px 16px; font-size: 0.9rem; }
+            .share-tip { padding: 18px; font-size: 0.95rem; margin-top: 28px; }
+        }
+
+        /* Large desktop styles */
+        @media (min-width: 1024px) {
+            .container { max-width: 800px; }
+            .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .question-card { padding: 40px; }
+            .result-card { padding: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Landing Page -->
+        <div id="landing" class="page active">
+            <div class="landing">
+                <div class="crystal-icon">💎</div>
+                <h1>晶石甄选</h1>
+                <p class="subtitle">找到与你气场最契合的手串</p>
+                <div class="intro-text">
+                    <p>每一颗晶石都蕴含着独特的能量与寓意，选择一条与你心意相通的手串，能为生活增添美好与力量。</p>
+                    <p>回答 5 个小问题，为你甄选最适合的手串品类 🌟</p>
+                </div>
+                <button class="btn" onclick="startQuiz()">开始甄选</button>
+            </div>
+        </div>
+
+        <!-- Question Pages -->
+        <div id="quiz" class="page">
+            <div class="progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text" id="progressText"></div>
+            </div>
+            <div id="questionContainer"></div>
+            <div class="nav-btns">
+                <button class="btn-secondary" id="prevBtn" onclick="prevQuestion()">上一题</button>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+
+        <!-- Result Page -->
+        <div id="result" class="page"></div>
+    </div>
+
+    <script>
+        // ========== 数据配置区 ==========
+
+        // 品类数据库
+        const products = [
+            {
+                id: 'rose-quartz',
+                name: '粉水晶',
+                icon: '🌸',
+                meaning: '招桃花、增人缘、柔化气场',
+                desc: '粉水晶被称为"爱情之石"，能柔和自身磁场，吸引优质桃花，同时增进人际关系，让你更具亲和力与魅力。适合渴望爱情或想提升人缘的你。',
+                color: 'pink',
+                style: 'sweet',
+                price: '¥88 - ¥388',
+                tags: ['桃花', '人缘', '爱情']
+            },
+            {
+                id: 'amethyst',
+                name: '紫水晶',
+                icon: '🔮',
+                meaning: '开智慧、助学业事业、遇贵人',
+                desc: '紫水晶象征智慧与灵性，能帮助集中注意力、增强记忆力，在学业和事业上助你一臂之力。同时能招贵人，化解小人。',
+                color: 'purple',
+                style: 'elegant',
+                price: '¥128 - ¥588',
+                tags: ['智慧', '学业', '事业', '贵人']
+            },
+            {
+                id: 'citrine',
+                name: '黄水晶',
+                icon: '💰',
+                meaning: '招财聚气、旺偏财运',
+                desc: '黄水晶被誉为"财富之石"，主偏财运，能帮助聚集财富能量。同时增强自信和行动力，让你在投资和决策中更有底气。',
+                color: 'yellow',
+                style: 'luxury',
+                price: '¥168 - ¥688',
+                tags: ['招财', '偏财', '自信']
+            },
+            {
+                id: 'clear-quartz',
+                name: '白水晶',
+                icon: '✨',
+                meaning: '净化心灵、平衡能量、辟邪',
+                desc: '白水晶是"水晶之王"，具有强大的净化能力，能清除负面能量，平衡全身气场。适合想要身心平衡、净化磁场的人。',
+                color: 'white',
+                style: 'minimal',
+                price: '¥68 - ¥288',
+                tags: ['净化', '平衡', '平安']
+            },
+            {
+                id: 'obsidian',
+                name: '黑曜石',
+                icon: '🖤',
+                meaning: '辟邪挡煞、排除负能量、护身',
+                desc: '黑曜石是强大的护身符，能吸收并排除体内负能量，辟邪化煞。适合经常出差、走夜路或感觉气场低迷时佩戴。',
+                color: 'black',
+                style: 'cool',
+                price: '¥58 - ¥268',
+                tags: ['辟邪', '护身', '排除负能量']
+            },
+            {
+                id: 'green-phantom',
+                name: '绿幽灵',
+                icon: '🌿',
+                meaning: '旺事业运、招正财、生机勃勃',
+                desc: '绿幽灵水晶内含绿色矿物质，象征生机与成长。是事业水晶的代表，能帮助你在工作中步步高升，同时招正财。',
+                color: 'green',
+                style: 'elegant',
+                price: '¥198 - ¥888',
+                tags: ['事业', '正财', '成长']
+            },
+            {
+                id: 'rhodochrosite',
+                name: '红纹石',
+                icon: '❤️',
+                meaning: '招正缘、化解心结、疗愈情感',
+                desc: '红纹石被称为"爱神之石"，比粉晶更专注于正缘。能帮助释放内心的情感创伤，吸引真正适合你的另一半。',
+                color: 'pink',
+                style: 'sweet',
+                price: '¥268 - ¥1288',
+                tags: ['正缘', '疗愈', '爱情']
+            },
+            {
+                id: 'moonstone',
+                name: '月光石',
+                icon: '🌙',
+                meaning: '女性守护、舒缓情绪、安眠',
+                desc: '月光石是女性的守护石，能柔和阴性能量，舒缓焦虑情绪，改善睡眠质量。同时增强直觉力和内在智慧。',
+                color: 'white',
+                style: 'elegant',
+                price: '¥138 - ¥568',
+                tags: ['女性守护', '安眠', '舒缓情绪']
+            },
+            {
+                id: 'tiger-eye',
+                name: '虎眼石',
+                icon: '🐯',
+                meaning: '增强勇气、决断力、坚定信念',
+                desc: '虎眼石赋予人勇气和决断力，帮助你在关键时刻做出正确选择。同时增强自信和执行力，适合需要突破自我的你。',
+                color: 'yellow',
+                style: 'cool',
+                price: '¥78 - ¥328',
+                tags: ['勇气', '决断', '自信']
+            },
+            {
+                id: 'garnet',
+                name: '石榴石',
+                icon: '🍷',
+                meaning: '美容养颜、调理气血、恢复活力',
+                desc: '石榴石被称为"女人石"，能促进血液循环、改善气色。长期佩戴有助于调理气血，让你由内而外散发好气色。',
+                color: 'red',
+                style: 'elegant',
+                price: '¥98 - ¥468',
+                tags: ['美容', '气血', '活力']
+            }
+        ];
+
+        // 问题配置
+        const questions = [
+            {
+                id: 'mbti',
+                title: '你的性格更接近以下哪种？',
+                desc: '这帮助我们了解你的气质偏好',
+                options: [
+                    { icon: '🦋', label: '外向开朗型', desc: 'E人 · 喜欢社交、热情主动', value: 'E' },
+                    { icon: '🦉', label: '内向沉稳型', desc: 'I人 · 喜欢独处、深思熟虑', value: 'I' },
+                    { icon: '🌊', label: '感性浪漫型', desc: 'F人 · 重感受、有同理心', value: 'F' },
+                    { icon: '🏔️', label: '理性务实型', desc: 'T人 · 重逻辑、目标导向', value: 'T' }
+                ],
+                mapping: {
+                    'E': ['rose-quartz', 'citrine', 'tiger-eye'],
+                    'I': ['amethyst', 'clear-quartz', 'moonstone'],
+                    'F': ['rose-quartz', 'rhodochrosite', 'moonstone'],
+                    'T': ['citrine', 'green-phantom', 'tiger-eye']
+                }
+            },
+            {
+                id: 'purpose',
+                title: '你现在最想提升的是什么？',
+                desc: '选择你最在意的一项',
+                options: [
+                    { icon: '💕', label: '桃花爱情', desc: '想脱单或增进感情', value: 'love' },
+                    { icon: '💼', label: '事业学业', desc: '工作顺利、考试顺利', value: 'career' },
+                    { icon: '💰', label: '财富运势', desc: '招财聚气、提升财运', value: 'wealth' },
+                    { icon: '🧘', label: '身心健康', desc: '净化心灵、改善状态', value: 'health' },
+                    { icon: '🛡️', label: '平安护身', desc: '辟邪挡煞、保佑平安', value: 'protect' }
+                ],
+                mapping: {
+                    'love': ['rose-quartz', 'rhodochrosite', 'garnet'],
+                    'career': ['green-phantom', 'amethyst', 'tiger-eye'],
+                    'wealth': ['citrine', 'green-phantom', 'tiger-eye'],
+                    'health': ['moonstone', 'clear-quartz', 'garnet'],
+                    'protect': ['obsidian', 'clear-quartz', 'tiger-eye']
+                }
+            },
+            {
+                id: 'color',
+                title: '你更偏爱哪种颜色？',
+                desc: '选择让你感觉舒服的颜色',
+                options: [
+                    { icon: '🌸', label: '粉色系', desc: '温柔甜美', value: 'pink' },
+                    { icon: '💜', label: '紫色系', desc: '神秘优雅', value: 'purple' },
+                    { icon: '💛', label: '金色/黄色系', desc: '贵气温暖', value: 'yellow' },
+                    { icon: '🤍', label: '白色/透明系', desc: '纯净简约', value: 'white' },
+                    { icon: '🖤', label: '黑色系', desc: '酷感百搭', value: 'black' },
+                    { icon: '💚', label: '绿色系', desc: '清新自然', value: 'green' },
+                    { icon: '❤️', label: '红色系', desc: '热情活力', value: 'red' }
+                ],
+                mapping: {
+                    'pink': ['rose-quartz', 'rhodochrosite'],
+                    'purple': ['amethyst'],
+                    'yellow': ['citrine', 'tiger-eye'],
+                    'white': ['clear-quartz', 'moonstone'],
+                    'black': ['obsidian'],
+                    'green': ['green-phantom'],
+                    'red': ['garnet', 'rhodochrosite']
+                }
+            },
+            {
+                id: 'style',
+                title: '你日常的穿搭风格更接近？',
+                desc: '这帮我们挑选与你最搭的款式',
+                options: [
+                    { icon: '🎀', label: '甜美少女风', desc: '粉嫩、可爱、温柔', value: 'sweet' },
+                    { icon: '👗', label: '优雅气质风', desc: '精致、高级、知性', value: 'elegant' },
+                    { icon: '😎', label: '酷飒中性风', desc: '简约、利落、有态度', value: 'cool' },
+                    { icon: '🌿', label: '文艺森系风', desc: '自然、随性、有质感', value: 'natural' },
+                    { icon: '👑', label: '轻奢名媛风', desc: '华丽、吸睛、贵气', value: 'luxury' }
+                ],
+                mapping: {
+                    'sweet': ['rose-quartz', 'rhodochrosite', 'moonstone'],
+                    'elegant': ['amethyst', 'garnet', 'moonstone'],
+                    'cool': ['obsidian', 'tiger-eye', 'clear-quartz'],
+                    'natural': ['green-phantom', 'clear-quartz', 'moonstone'],
+                    'luxury': ['citrine', 'amethyst', 'green-phantom']
+                }
+            },
+            {
+                id: 'budget',
+                title: '你的预算大概是？',
+                desc: '我们会在这个范围内为你推荐',
+                options: [
+                    { icon: '🌱', label: '入门尝鲜', desc: '¥100 以内', value: 'low' },
+                    { icon: '🌿', label: '品质之选', desc: '¥100 - ¥300', value: 'mid' },
+                    { icon: '🌳', label: '进阶收藏', desc: '¥300 - ¥600', value: 'high' },
+                    { icon: '💎', label: '精品典藏', desc: '¥600 以上', value: 'premium' }
+                ],
+                mapping: {
+                    'low': ['obsidian', 'clear-quartz', 'rose-quartz'],
+                    'mid': ['rose-quartz', 'tiger-eye', 'garnet', 'moonstone'],
+                    'high': ['amethyst', 'citrine', 'rhodochrosite', 'green-phantom'],
+                    'premium': ['green-phantom', 'rhodochrosite', 'citrine']
+                }
+            }
+        ];
+
+        // ========== 逻辑控制区 ==========
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        function startQuiz() {
+            document.getElementById('landing').classList.remove('active');
+            document.getElementById('quiz').classList.add('active');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `第 ${currentQuestion + 1} / ${questions.length} 题`;
+
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <div class="question-card">
+                    <div class="question-num">Question ${currentQuestion + 1}</div>
+                    <div class="question-title">${q.title}</div>
+                    <div class="options">
+                        ${q.options.map((opt, idx) => `
+                            <div class="option ${answers[q.id] === opt.value ? 'selected' : ''}" onclick="selectOption('${q.id}', '${opt.value}', this)">
+                                <div class="option-icon">${opt.icon}</div>
+                                <div class="option-text">
+                                    <div class="label">${opt.label}</div>
+                                    <div class="desc">${opt.desc}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Update nav buttons
+            document.getElementById('prevBtn').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.disabled = !answers[q.id];
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? '查看结果' : '下一题';
+        }
+
+        function selectOption(questionId, value, element) {
+            answers[questionId] = value;
+            // Update UI
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (!answers[questions[currentQuestion].id]) return;
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz').classList.remove('active');
+            document.getElementById('result').classList.add('active');
+
+            // Calculate scores
+            const scores = {};
+            products.forEach(p => scores[p.id] = 0);
+
+            questions.forEach(q => {
+                const answer = answers[q.id];
+                const matched = q.mapping[answer] || [];
+                matched.forEach(productId => {
+                    scores[productId] = (scores[productId] || 0) + 1;
+                });
+            });
+
+            // Sort by score
+            const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const topIds = sorted.filter(s => s[1] > 0).slice(0, 3).map(s => s[0]);
+            const topProducts = topIds.map(id => products.find(p => p.id === id));
+
+            // Render result
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = `
+                <div class="result">
+                    <div class="result-header">
+                        <h2>✨ 你的专属推荐</h2>
+                        <p>根据你的回答，以下手串与你最契合</p>
+                    </div>
+                    <div class="result-summary">
+                        <h4>你的气质画像</h4>
+                        <div class="summary-tags">
+                            <span class="summary-tag">${getMBTILabel(answers.mbti)}</span>
+                            <span class="summary-tag">${getPurposeLabel(answers.purpose)}</span>
+                            <span class="summary-tag">${getCustomLabel('color', answers.color)}</span>
+                            <span class="summary-tag">${getCustomLabel('style', answers.style)}</span>
+                        </div>
+                    </div>
+                    ${topProducts.map((p, i) => `
+                        <div class="result-card ${i === 0 ? 'featured' : ''}">
+                            <h3>
+                                ${p.icon} ${p.name}
+                                ${i === 0 ? '<span class="tag">最推荐</span>' : ''}
+                            </h3>
+                            <div class="meaning">寓意：${p.meaning}</div>
+                            <div class="desc">${p.desc}</div>
+                            <div class="price">参考价：<span>${p.price}</span></div>
+                        </div>
+                    `).join('')}
+                    <button class="btn" onclick="restart()" style="margin-top: 16px;">重新测试</button>
+                    <div class="share-tip">
+                        💡 小提示：将测试分享给朋友，一起找到专属幸运手串吧！
+                    </div>
+                </div>
+            `;
+        }
+
+        function getMBTILabel(value) {
+            const labels = { 'E': '外向开朗', 'I': '内向沉稳', 'F': '感性浪漫', 'T': '理性务实' };
+            return labels[value] || '';
+        }
+
+        function getPurposeLabel(value) {
+            const labels = { 'love': '桃花爱情', 'career': '事业学业', 'wealth': '财富运势', 'health': '身心健康', 'protect': '平安护身' };
+            return labels[value] || '';
+        }
+
+        function getCustomLabel(questionId, value) {
+            const q = questions.find(q => q.id === questionId);
+            if (!q) return '';
+            const opt = q.options.find(o => o.value === value);
+            return opt ? opt.label : '';
+        }
+
+        function restart() {
+            currentQuestion = 0;
+            answers = {};
+            document.getElementById('result').classList.remove('active');
+            document.getElementById('landing').classList.add('active');
+        }
+    </script>
+</body>
+</html>
