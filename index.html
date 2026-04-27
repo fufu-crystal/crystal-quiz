@@ -16,6 +16,10 @@
             --shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        .option-icon, .question-emoji, .sparkles, .crystal-ball {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
             background: var(--bg);
@@ -616,7 +620,7 @@
                     { icon: '🌀', label: '情绪容易波动', desc: '焦虑、内耗、睡不好', value: 'anxiety' },
                     { icon: '💸', label: '搞不到钱', desc: '收入瓶颈、存不下钱', value: 'money' },
                     { icon: '🧱', label: '事事不顺', desc: '小人多、阻力大', value: 'obstacle' },
-                    { icon: '😶‍️', label: '迷茫没方向', desc: '不知道该往哪走', value: 'lost' },
+                    { icon: '😶', label: '迷茫没方向', desc: '不知道该往哪走', value: 'lost' },
                     { icon: '😫', label: '太累了', desc: '身心疲惫、需要休息', value: 'tired' }
                 ],
                 mapping: {
@@ -675,7 +679,7 @@
                     { icon: '🚀', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
                     { icon: '🛡️', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
                     { icon: '😊', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' },
-                    { icon: '💕', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
+                    { icon: '💗', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
                 ],
                 mapping: {
                     'rich': ['wealth-gather', 'confident-wealth', 'protect-wealth', 'steady-wealth'],
@@ -713,7 +717,7 @@
                     { icon: '💛', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
                     { icon: '🤍', label: '透明/白色系', desc: '纯净清爽', value: 'white' },
                     { icon: '💚', label: '绿色系', desc: '清新自然', value: 'green' },
-                    { icon: '🖤', label: '黑色系', desc: '酷感百搭', value: 'black' }
+                    { icon: '⬛', label: '黑色系', desc: '酷感百搭', value: 'black' }
                 ],
                 mapping: {
                     'purple': ['people'],
