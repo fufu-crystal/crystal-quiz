@@ -641,7 +641,7 @@
                 desc: '选一个最贴近你当下的',
                 options: [
                     { icon: '🌀', label: '情绪容易波动', desc: '焦虑、内耗、睡不好', value: 'anxiety' },
-                    { icon: '', label: '搞不到钱', desc: '收入瓶颈、存不下钱', value: 'money' },
+                    { icon: '💸', label: '搞不到钱', desc: '收入瓶颈、存不下钱', value: 'money' },
                     { icon: '🧱', label: '事事不顺', desc: '小人多、阻力大', value: 'obstacle' },
                     { icon: '😶', label: '迷茫没方向', desc: '不知道该往哪走', value: 'lost' },
                     { icon: '😫', label: '太累了', desc: '身心疲惫、需要休息', value: 'tired' }
@@ -681,9 +681,9 @@
                 desc: '这反映了你的内在特质',
                 options: [
                     { icon: '💭', label: '先感受情绪', desc: 'F人 · 在意氛围和他人感受', value: 'F' },
-                    { icon: '', label: '先分析利弊', desc: 'T人 · 理性思考最优解', value: 'T' },
+                    { icon: '📊', label: '先分析利弊', desc: 'T人 · 理性思考最优解', value: 'T' },
                     { icon: '✨', label: '先想可能性', desc: 'N人 · 跳跃思维找灵感', value: 'N' },
-                    { icon: '', label: '先看具体细节', desc: 'S人 · 关注当下和实际', value: 'S' }
+                    { icon: '📋', label: '先看具体细节', desc: 'S人 · 关注当下和实际', value: 'S' }
                 ],
                 mapping: {
                     'F': ['people', 'purify', 'confidence'],
@@ -699,7 +699,7 @@
                 desc: '想象一下戴上水晶后最理想的画面',
                 options: [
                     { icon: '💸', label: '钱包鼓鼓', desc: '财富自由、财运亨通', value: 'rich' },
-                    { icon: '', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
+                    { icon: '🚀', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
                     { icon: '🛡', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
                     { icon: '😊', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' },
                     { icon: '💗', label: '桃花人缘', desc: '优质关系、被人喜欢', value: 'love' }
@@ -737,7 +737,7 @@
                 desc: '颜色也有能量，选让你舒服的',
                 options: [
                     { icon: '💜', label: '紫色系', desc: '神秘高贵', value: 'purple' },
-                    { icon: '', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
+                    { icon: '💛', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
                     { icon: '🤍', label: '透明/白色系', desc: '纯净清爽', value: 'white' },
                     { icon: '💚', label: '绿色系', desc: '清新自然', value: 'green' },
                     { icon: '⬛', label: '黑色系', desc: '酷感百搭', value: 'black' }
@@ -758,7 +758,7 @@
                 options: [
                     { icon: '🌊', label: '流动', desc: '顺势而为、不费力', value: 'flow' },
                     { icon: '🔥', label: '燃烧', desc: '充满能量、想突破', value: 'burn' },
-                    { icon: '', label: '生长', desc: '慢慢变好、向上', value: 'grow' },
+                    { icon: '🌿', label: '生长', desc: '慢慢变好、向上', value: 'grow' },
                     { icon: '🪨', label: '稳定', desc: '扎根当下、不摇摆', value: 'stable' },
                     { icon: '✨', label: '闪耀', desc: '被看见、发光发热', value: 'shine' }
                 ],
@@ -844,14 +844,27 @@
         }
 
         function showResult() {
-            // Show loading animation first
-            showLoadingAnimation();
+            // Show "submitting" animation first, then blessing animation
+            showSubmittingAnimation();
         }
 
-        function showLoadingAnimation() {
+        function showSubmittingAnimation() {
             const overlay = document.getElementById('loadingOverlay');
             overlay.classList.add('active');
 
+            // Phase 1: Submitting
+            document.getElementById('crystalEmoji').textContent = '📝';
+            document.getElementById('blessingText').textContent = '正在提交答案...';
+            document.getElementById('subText').textContent = '请稍候';
+            document.getElementById('loadingFill').style.width = '20%';
+
+            setTimeout(() => {
+                // Phase 2: Blessing animation
+                showLoadingAnimation();
+            }, 800);
+        }
+
+        function showLoadingAnimation() {
             const blessings = [
                 { emoji: '🔮', text: '正在开光...', sub: '水晶灵性已激活' },
                 { emoji: '✨', text: '正在加持...', sub: '为你注入正能量' },
@@ -862,18 +875,18 @@
 
             let step = 0;
             const totalSteps = blessings.length;
-            const interval = 600; // ms per step
+            const interval = 600;
 
             const updateBlessing = () => {
                 if (step < totalSteps) {
                     document.getElementById('crystalEmoji').textContent = blessings[step].emoji;
                     document.getElementById('blessingText').textContent = blessings[step].text;
                     document.getElementById('subText').textContent = blessings[step].sub;
-                    document.getElementById('loadingFill').style.width = ((step + 1) / totalSteps * 100) + '%';
+                    document.getElementById('loadingFill').style.width = (20 + (step + 1) / totalSteps * 80) + '%';
                     step++;
                     setTimeout(updateBlessing, interval);
                 } else {
-                    // Animation done, show actual results
+                    const overlay = document.getElementById('loadingOverlay');
                     overlay.classList.remove('active');
                     renderResultPage();
                 }
