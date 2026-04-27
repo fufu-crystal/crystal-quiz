@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>巳酉水晶 | 找到你的专属水晶</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FUFU来财 | 找到你的专属水晶</title>
     <style>
         :root {
             --primary: #1a1a2e;
@@ -15,16 +15,17 @@
             --card-bg: #ffffff;
             --shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
             background: var(--bg);
             min-height: 100vh;
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         .container {
-            max-width: 640px;
+            max-width: 520px;
             margin: 0 auto;
             padding: 0 16px 40px;
             min-height: 100vh;
@@ -37,149 +38,143 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 0 10px;
-            gap: 10px;
+            padding: 16px 0 8px;
+            gap: 8px;
         }
         .header img {
-            height: 36px;
+            height: 32px;
             width: auto;
         }
         .header .brand {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--primary);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         /* Landing Page */
-        .landing { text-align: center; padding-top: 20px; }
-        .landing .hero-image {
-            width: 100%;
-            border-radius: 16px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow);
-        }
+        .landing { text-align: center; padding-top: 16px; }
         .landing h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
         .landing .subtitle {
             color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 32px;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
         }
         .landing .intro-text {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 28px;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow);
             text-align: left;
         }
         .landing .intro-text p {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .btn {
             display: inline-block;
             background: var(--primary);
             color: var(--accent-light);
-            padding: 14px 40px;
+            padding: 14px 36px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             border: none;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
-            max-width: 280px;
+            max-width: 260px;
             font-weight: 500;
+            letter-spacing: 1px;
         }
         .btn:hover { background: #2d2d4e; }
-        .btn:active { transform: scale(0.98); }
+        .btn:active { transform: scale(0.97); }
 
         /* Progress Bar */
-        .progress { margin: 20px 0; }
+        .progress { margin: 16px 0; }
         .progress-bar {
-            height: 4px;
+            height: 3px;
             background: #e8e4df;
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
         }
         .progress-fill {
             height: 100%;
             background: var(--accent);
-            border-radius: 4px;
+            border-radius: 3px;
             transition: width 0.5s ease;
         }
         .progress-text {
             text-align: center;
             color: var(--text-light);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             margin-top: 6px;
         }
 
         /* Question Page */
         .question-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 24px 18px;
+            border-radius: 14px;
+            padding: 20px 16px;
             box-shadow: var(--shadow);
-            margin-bottom: 16px;
-        }
-        .question-emoji {
-            font-size: 2.5rem;
             margin-bottom: 12px;
         }
+        .question-emoji {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
         .question-title {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 6px;
-            line-height: 1.4;
+            margin-bottom: 4px;
+            line-height: 1.45;
         }
         .question-desc {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-light);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
-        .options { display: flex; flex-direction: column; gap: 10px; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
         .option {
             background: var(--bg);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 14px;
+            border: 1.5px solid transparent;
+            border-radius: 10px;
+            padding: 12px 14px;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 12px;
-            -webkit-tap-highlight-color: transparent;
+            gap: 10px;
         }
         .option:hover { border-color: var(--accent-light); }
-        .option:active { transform: scale(0.98); }
+        .option:active { transform: scale(0.98); background: #faf6ef; }
         .option.selected {
             border-color: var(--accent);
             background: #faf6ef;
         }
-        .option-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .option-icon { font-size: 1.3rem; flex-shrink: 0; }
         .option-text { flex: 1; }
-        .option-text .label { font-weight: 500; margin-bottom: 2px; font-size: 0.95rem; }
-        .option-text .desc { font-size: 0.8rem; color: var(--text-light); }
+        .option-text .label { font-weight: 500; margin-bottom: 1px; font-size: 0.9rem; }
+        .option-text .desc { font-size: 0.75rem; color: var(--text-light); }
         .nav-btns {
             display: flex;
             justify-content: space-between;
-            margin-top: 16px;
-            gap: 12px;
+            margin-top: 14px;
+            gap: 10px;
         }
         .btn-secondary {
             background: white;
             color: var(--text);
-            border: 2px solid #e8e4df;
-            padding: 12px 20px;
+            border: 1.5px solid #e8e4df;
+            padding: 12px 18px;
             border-radius: 50px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
             flex: 1;
@@ -189,105 +184,105 @@
 
         /* Result Page */
         .result { text-align: center; }
-        .result-header { margin-bottom: 20px; }
-        .result-header h2 { color: var(--primary); font-size: 1.3rem; margin-bottom: 6px; }
-        .result-header p { color: var(--text-light); font-size: 0.85rem; }
+        .result-header { margin-bottom: 16px; }
+        .result-header h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 4px; }
+        .result-header p { color: var(--text-light); font-size: 0.8rem; }
         .result-summary {
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 14px;
             box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
-        .result-summary h4 { margin-bottom: 10px; color: var(--primary); font-size: 0.95rem; }
-        .summary-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .result-summary h4 { margin-bottom: 8px; color: var(--primary); font-size: 0.9rem; }
+        .summary-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
         .summary-tag {
             background: var(--bg);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 0.75rem;
             color: var(--text-light);
         }
         .result-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             text-align: left;
         }
         .result-card.featured {
-            border: 2px solid var(--accent);
+            border: 1.5px solid var(--accent);
         }
         .result-card .card-image {
             width: 100%;
             display: block;
         }
-        .result-card .card-body { padding: 16px; }
+        .result-card .card-body { padding: 14px; }
         .result-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 4px;
+            font-size: 1rem;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .result-card .tag {
             display: inline-block;
             background: var(--accent);
             color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
+            font-size: 0.65rem;
+            padding: 2px 7px;
+            border-radius: 8px;
             margin-left: auto;
         }
         .result-card .material {
             color: var(--accent);
             font-weight: 500;
-            margin: 8px 0;
-            font-size: 0.85rem;
+            margin: 6px 0;
+            font-size: 0.8rem;
         }
         .result-card .desc {
             color: var(--text-light);
-            font-size: 0.85rem;
-            margin-bottom: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
             line-height: 1.5;
         }
         .share-tip {
             background: #faf6ef;
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 20px;
-            font-size: 0.85rem;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 0.8rem;
             color: var(--text-light);
         }
 
         /* Desktop styles */
         @media (min-width: 768px) {
             .container { padding: 0 24px 60px; }
-            .header { padding: 30px 0 16px; }
-            .header img { height: 44px; }
-            .header .brand { font-size: 1.3rem; }
-            .landing { padding-top: 30px; }
-            .landing h1 { font-size: 2rem; }
-            .landing .subtitle { font-size: 1rem; margin-bottom: 40px; }
-            .landing .intro-text { padding: 28px; }
-            .landing .intro-text p { font-size: 1rem; }
-            .btn { padding: 16px 56px; font-size: 1.1rem; width: auto; }
-            .question-card { padding: 32px; }
-            .question-emoji { font-size: 3rem; }
-            .question-title { font-size: 1.4rem; }
-            .question-desc { font-size: 0.95rem; }
-            .options { gap: 14px; }
-            .option { padding: 18px; }
-            .result-header h2 { font-size: 1.6rem; }
-            .result-card h3 { font-size: 1.2rem; }
-            .result-card .material { font-size: 0.95rem; }
-            .result-card .desc { font-size: 0.95rem; }
+            .header { padding: 24px 0 12px; }
+            .header img { height: 40px; }
+            .header .brand { font-size: 1.2rem; }
+            .landing { padding-top: 24px; }
+            .landing h1 { font-size: 1.8rem; }
+            .landing .subtitle { font-size: 0.95rem; margin-bottom: 32px; }
+            .landing .intro-text { padding: 24px; }
+            .landing .intro-text p { font-size: 0.95rem; }
+            .btn { padding: 16px 48px; font-size: 1rem; width: auto; }
+            .question-card { padding: 28px 24px; }
+            .question-emoji { font-size: 2.8rem; }
+            .question-title { font-size: 1.3rem; }
+            .question-desc { font-size: 0.9rem; }
+            .options { gap: 12px; }
+            .option { padding: 16px; }
+            .result-header h2 { font-size: 1.5rem; }
+            .result-card h3 { font-size: 1.15rem; }
+            .result-card .material { font-size: 0.9rem; }
+            .result-card .desc { font-size: 0.9rem; }
         }
 
         @media (min-width: 1024px) {
-            .container { max-width: 800px; }
-            .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .container { max-width: 720px; }
+            .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
         }
     </style>
 </head>
@@ -295,8 +290,8 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <img src="logo.jpg" alt="巳酉水晶">
-            <span class="brand">巳酉水晶</span>
+            <img src="logo.jpg" alt="FUFU来财">
+            <span class="brand">FUFU来财</span>
         </div>
 
         <!-- Landing Page -->
@@ -306,7 +301,7 @@
                 <p class="subtitle">每一颗水晶都有独特的能量</p>
                 <div class="intro-text">
                     <p>水晶的能量千差万别，选择一条与你心意相通的手串，能为生活增添美好与力量。</p>
-                    <p>回答 8 个小问题，为你匹配最适合的水晶手串 ✨</p>
+                    <p>回答 5 个小问题，为你匹配最适合的水晶手串 ✨</p>
                 </div>
                 <button class="btn" onclick="startQuiz()">开始测试</button>
             </div>
@@ -447,163 +442,99 @@
         // ========== 问题配置 ==========
         const questions = [
             {
-                id: 'current-state',
-                emoji: '🌡️',
-                title: '最近的状态怎么样？',
-                desc: '选一个最符合你当下感受的',
+                id: 'trouble',
+                emoji: '😮‍💨',
+                title: '最近一段时间，你感觉最困扰的状态是什么？',
+                desc: '选一个最贴近你当下的',
                 options: [
-                    { icon: '💪', label: '干劲满满', desc: '精力充沛，想大干一场', value: 'energetic' },
-                    { icon: '😰', label: '压力山大', desc: '焦虑疲惫，需要释放', value: 'stressed' },
-                    { icon: '😐', label: '平平淡淡', desc: '不好不坏，缺少动力', value: 'neutral' },
-                    { icon: '🎯', label: '目标明确', desc: '有方向，需要助力', value: 'focused' },
-                    { icon: '🔄', label: '遇到瓶颈', desc: '卡住了，需要突破', value: 'stuck' }
+                    { icon: '🌀', label: '情绪容易波动', desc: '焦虑、内耗、睡不好', value: 'anxiety' },
+                    { icon: '💸', label: '搞不到钱', desc: '收入瓶颈、存不下钱', value: 'money' },
+                    { icon: '🧱', label: '事事不顺', desc: '小人多、阻力大', value: 'obstacle' },
+                    { icon: '😶‍🌫️', label: '迷茫没方向', desc: '不知道该往哪走', value: 'lost' },
+                    { icon: '😫', label: '太累了', desc: '身心疲惫、需要休息', value: 'tired' }
                 ],
                 mapping: {
-                    'energetic': ['wealth-gather', 'confident-wealth', 'execution'],
-                    'stressed': ['purify', 'protect-dark1', 'protect-dark2'],
-                    'neutral': ['confidence', 'people', 'career'],
-                    'focused': ['career', 'execution', 'protect-wealth'],
-                    'stuck': ['confidence', 'wealth-noble', 'steady-wealth']
+                    'anxiety': ['purify', 'protect-dark2', 'steady-wealth'],
+                    'money': ['wealth-gather', 'confident-wealth', 'protect-wealth'],
+                    'obstacle': ['protect-dark1', 'protect-dark2', 'career'],
+                    'lost': ['confidence', 'career', 'wealth-noble'],
+                    'tired': ['purify', 'steady-wealth', 'people']
                 }
             },
             {
-                id: 'purpose',
-                emoji: '🎯',
-                title: '你最想改善哪个方面？',
-                desc: '选择你最在意的一项',
+                id: 'battery',
+                emoji: '🔋',
+                title: '如果把你的身体比作电池，电量流失最快的时候是？',
+                desc: '哪个场景最让你心累',
                 options: [
-                    { icon: '💰', label: '搞钱搞钱', desc: '想招财、守财、聚财', value: 'wealth' },
-                    { icon: '💼', label: '事业发展', desc: '升职加薪、学业进步', value: 'career' },
-                    { icon: '🛡️', label: '防小人护身', desc: '避邪挡煞、远离负能量', value: 'protect' },
-                    { icon: '❤️', label: '人际关系', desc: '好人缘、贵人运', value: 'people' },
-                    { icon: '🧘', label: '身心状态', desc: '自信、执行力、情绪稳定', value: 'self' }
+                    { icon: '👥', label: '社交之后', desc: '和人打交道好耗能', value: 'social' },
+                    { icon: '💻', label: '工作/学习时', desc: '一上班就疲惫', value: 'work' },
+                    { icon: '🤔', label: '想太多的时候', desc: '内耗、反复纠结', value: 'overthink' },
+                    { icon: '😤', label: '遇到不讲理的人', desc: '被气到不想说话', value: 'angry' },
+                    { icon: '🌙', label: '晚上睡不着', desc: '翻来覆去睡不着', value: 'insomnia' }
                 ],
                 mapping: {
-                    'wealth': ['wealth-gather', 'wealth-gather', 'confident-wealth', 'protect-wealth', 'steady-wealth'],
-                    'career': ['career', 'wealth-noble', 'execution'],
-                    'protect': ['protect-dark1', 'protect-dark2', 'purify'],
-                    'people': ['people', 'wealth-noble', 'confidence'],
-                    'self': ['confidence', 'execution', 'purify']
+                    'social': ['people', 'purify', 'protect-dark2'],
+                    'work': ['career', 'execution', 'confidence'],
+                    'overthink': ['purify', 'steady-wealth', 'protect-dark2'],
+                    'angry': ['protect-dark1', 'protect-dark2', 'confidence'],
+                    'insomnia': ['purify', 'steady-wealth', 'people']
                 }
             },
             {
-                id: 'work-env',
-                emoji: '🏢',
-                title: '你的工作环境怎么样？',
-                desc: '这影响水晶的能量选择',
+                id: 'mbti',
+                emoji: '🧠',
+                title: '面对突发问题时，你的第一反应是？',
+                desc: '这反映了你的内在特质',
                 options: [
-                    { icon: '🌟', label: '顺风顺水', desc: '环境好，想锦上添花', value: 'good' },
-                    { icon: '🌊', label: '竞争激烈', desc: '内卷严重，需要助力', value: 'competitive' },
-                    { icon: '🕳️', label: '小人较多', desc: '职场复杂，需防暗箭', value: 'toxic' },
-                    { icon: '🏠', label: '自由职业', desc: '自己干，需要稳定和客源', value: 'freelance' },
-                    { icon: '📚', label: '学生党', desc: '专注学业，提升效率', value: 'student' }
+                    { icon: '💭', label: '先感受情绪', desc: 'F人 · 在意氛围和他人感受', value: 'F' },
+                    { icon: '📊', label: '先分析利弊', desc: 'T人 · 理性思考最优解', value: 'T' },
+                    { icon: '✨', label: '先想可能性', desc: 'N人 · 跳跃思维找灵感', value: 'N' },
+                    { icon: '📋', label: '先看具体细节', desc: 'S人 · 关注当下和实际', value: 'S' }
                 ],
                 mapping: {
-                    'good': ['wealth-gather', 'confident-wealth', 'people'],
-                    'competitive': ['execution', 'career', 'confidence'],
-                    'toxic': ['protect-dark1', 'protect-dark2', 'purify'],
-                    'freelance': ['steady-wealth', 'people', 'wealth-noble'],
-                    'student': ['career', 'confidence', 'execution']
+                    'F': ['people', 'purify', 'confidence'],
+                    'T': ['career', 'execution', 'steady-wealth'],
+                    'N': ['wealth-noble', 'confident-wealth', 'career'],
+                    'S': ['protect-wealth', 'execution', 'protect-dark1']
                 }
             },
             {
-                id: 'personality',
-                emoji: '🦋',
-                title: '你的性格更接近？',
-                desc: '了解你的内在特质',
+                id: 'wish',
+                emoji: '💫',
+                title: '如果宇宙现在给你一张"显化支票"，你希望兑换什么？',
+                desc: '选你最渴望的一项',
                 options: [
-                    { icon: '🔥', label: '行动派', desc: '想到就做，不喜欢等待', value: 'action' },
-                    { icon: '🌊', label: '感性派', desc: '重感受，有同理心', value: 'emotional' },
-                    { icon: '🏔️', label: '理性派', desc: '重逻辑，目标明确', value: 'rational' },
-                    { icon: '🌸', label: '温和派', desc: '随和友善，不喜欢冲突', value: 'gentle' }
+                    { icon: '💕', label: '桃花/人缘', desc: '优质关系、被人喜欢', value: 'love' },
+                    { icon: '💰', label: '钱/事业', desc: '财富自由、事业有成', value: 'wealth' },
+                    { icon: '🧘', label: '松弛感', desc: '内心平静、不焦虑', value: 'relax' },
+                    { icon: '🛡️', label: '气场/护盾', desc: '百毒不侵、小人退散', value: 'shield' }
                 ],
                 mapping: {
-                    'action': ['execution', 'wealth-gather', 'confidence'],
-                    'emotional': ['purify', 'people', 'protect-dark2'],
-                    'rational': ['career', 'steady-wealth', 'protect-wealth'],
-                    'gentle': ['confidence', 'people', 'wealth-noble']
-                }
-            },
-            {
-                id: 'color',
-                emoji: '🎨',
-                title: '你偏爱哪种颜色？',
-                desc: '颜色也有能量哦',
-                options: [
-                    { icon: '💜', label: '紫色系', desc: '神秘高贵', value: 'purple' },
-                    { icon: '💛', label: '金色/黄色系', desc: '富贵温暖', value: 'yellow' },
-                    { icon: '🤍', label: '透明/白色系', desc: '纯净清爽', value: 'white' },
-                    { icon: '💚', label: '绿色系', desc: '清新自然', value: 'green' },
-                    { icon: '🖤', label: '黑色系', desc: '酷感百搭', value: 'black' },
-                    { icon: '❤️', label: '红色系', desc: '热情活力', value: 'red' },
-                    { icon: '🤎', label: '棕色/茶色系', desc: '沉稳内敛', value: 'brown' }
-                ],
-                mapping: {
-                    'purple': ['people'],
-                    'yellow': ['wealth-gather', 'confident-wealth', 'execution'],
-                    'white': ['purify', 'career', 'steady-wealth'],
-                    'green': ['wealth-noble', 'career'],
-                    'black': ['protect-dark1', 'protect-dark2', 'protect-wealth'],
-                    'red': ['confidence', 'wealth-gather'],
-                    'brown': ['steady-wealth', 'execution']
-                }
-            },
-            {
-                id: 'style',
-                emoji: '👗',
-                title: '你平时的穿搭风格？',
-                desc: '选最接近你的日常',
-                options: [
-                    { icon: '🎀', label: '甜美温柔', desc: '粉嫩、可爱、小清新', value: 'sweet' },
-                    { icon: '👗', label: '优雅知性', desc: '简约、大方、有气质', value: 'elegant' },
-                    { icon: '😎', label: '酷飒利落', desc: '中性、干练、有态度', value: 'cool' },
-                    { icon: '🌿', label: '文艺自然', desc: '棉麻、森系、有质感', value: 'natural' },
-                    { icon: '👑', label: '精致贵气', desc: '注重细节、有品位', value: 'luxury' }
-                ],
-                mapping: {
-                    'sweet': ['people', 'confidence', 'wealth-noble'],
-                    'elegant': ['purify', 'career', 'steady-wealth'],
-                    'cool': ['protect-dark1', 'protect-dark2', 'execution'],
-                    'natural': ['wealth-noble', 'purify', 'steady-wealth'],
-                    'luxury': ['confident-wealth', 'wealth-gather', 'protect-wealth']
-                }
-            },
-            {
-                id: 'dream',
-                emoji: '✨',
-                title: '想象一下，戴上水晶后你希望发生什么？',
-                desc: '选一个你最期待的改变',
-                options: [
-                    { icon: '💸', label: '钱包鼓鼓', desc: '收入增加、财运亨通', value: 'rich' },
-                    { icon: '🚀', label: '事业飞升', desc: '升职加薪、贵人相助', value: 'success' },
-                    { icon: '🛡️', label: '百毒不侵', desc: '小人退散、邪气不近', value: 'safe' },
-                    { icon: '😊', label: '天天开心', desc: '情绪稳定、自信满满', value: 'happy' },
-                    { icon: '', label: '左右逢源', desc: '人缘爆棚、处处逢源', value: 'popular' }
-                ],
-                mapping: {
-                    'rich': ['wealth-gather', 'confident-wealth', 'protect-wealth', 'steady-wealth'],
-                    'success': ['career', 'wealth-noble', 'execution'],
-                    'safe': ['protect-dark1', 'protect-dark2', 'purify'],
-                    'happy': ['confidence', 'purify', 'people'],
-                    'popular': ['people', 'wealth-noble', 'confidence']
+                    'love': ['people', 'confidence', 'wealth-noble'],
+                    'wealth': ['wealth-gather', 'confident-wealth', 'career', 'protect-wealth'],
+                    'relax': ['purify', 'steady-wealth', 'people'],
+                    'shield': ['protect-dark1', 'protect-dark2', 'protect-wealth']
                 }
             },
             {
                 id: 'intuition',
                 emoji: '🔮',
-                title: '最后，凭直觉选一张图',
-                desc: '第一眼让你心动的',
+                title: '凭直觉，选一个此刻最吸引你的词',
+                desc: '不用想，选第一个跳出来的',
                 options: [
-                    { icon: '🌅', label: '山水画', desc: '宁静致远', value: 'landscape' },
-                    { icon: '🌊', label: '海浪图', desc: '波澜壮阔', value: 'wave' },
-                    { icon: '🌺', label: '花卉图', desc: '生机盎然', value: 'flower' },
-                    { icon: '🌌', label: '星空图', desc: '神秘浩瀚', value: 'starry' }
+                    { icon: '🌊', label: '流动', desc: '顺势而为、不费力', value: 'flow' },
+                    { icon: '🔥', label: '燃烧', desc: '充满能量、想突破', value: 'burn' },
+                    { icon: '🌿', label: '生长', desc: '慢慢变好、向上', value: 'grow' },
+                    { icon: '🪨', label: '稳定', desc: '扎根当下、不摇摆', value: 'stable' },
+                    { icon: '✨', label: '闪耀', desc: '被看见、发光发热', value: 'shine' }
                 ],
                 mapping: {
-                    'landscape': ['steady-wealth', 'career', 'purify'],
-                    'wave': ['protect-dark2', 'wealth-gather', 'execution'],
-                    'flower': ['people', 'wealth-noble', 'confidence'],
-                    'starry': ['protect-dark1', 'confident-wealth', 'career']
+                    'flow': ['purify', 'people', 'steady-wealth'],
+                    'burn': ['execution', 'confident-wealth', 'wealth-gather'],
+                    'grow': ['career', 'wealth-noble', 'confidence'],
+                    'stable': ['protect-wealth', 'steady-wealth', 'protect-dark1'],
+                    'shine': ['confidence', 'confident-wealth', 'career']
                 }
             }
         ];
@@ -622,7 +553,7 @@
             const q = questions[currentQuestion];
             const progress = ((currentQuestion) / questions.length) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = `第 ${currentQuestion + 1} / ${questions.length} 题`;
+            document.getElementById('progressText').textContent = `${currentQuestion + 1} / ${questions.length}`;
 
             const container = document.getElementById('questionContainer');
             container.innerHTML = `
@@ -696,23 +627,23 @@
             const topProducts = topIds.map(id => products.find(p => p.id === id));
 
             // 获取用户画像
-            const stateLabels = { 'energetic': '精力充沛', 'stressed': '压力较大', 'neutral': '状态平稳', 'focused': '目标明确', 'stuck': '遇到瓶颈' };
-            const purposeLabels = { 'wealth': '求财', 'career': '求事业', 'protect': '求护身', 'people': '求人缘', 'self': '求成长' };
-            const styleLabels = { 'sweet': '甜美', 'elegant': '优雅', 'cool': '酷飒', 'natural': '文艺', 'luxury': '精致' };
+            const troubleLabels = { 'anxiety': '情绪敏感', 'money': '求财心切', 'obstacle': '阻力较大', 'lost': '方向迷茫', 'tired': '身心疲惫' };
+            const wishLabels = { 'love': '求人缘', 'wealth': '求财富', 'relax': '求松弛', 'shield': '求护身' };
+            const mbtiLabels = { 'F': '感性F人', 'T': '理性T人', 'N': '直觉N人', 'S': '实感S人' };
 
             const resultContainer = document.getElementById('result');
             resultContainer.innerHTML = `
                 <div class="result">
                     <div class="result-header">
                         <h2>你的专属水晶已找到</h2>
-                        <p>根据 8 道题的测试结果</p>
+                        <p>根据 5 道题的测试结果</p>
                     </div>
                     <div class="result-summary">
                         <h4>你的能量画像</h4>
                         <div class="summary-tags">
-                            <span class="summary-tag">${stateLabels[answers['current-state']] || ''}</span>
-                            <span class="summary-tag">${purposeLabels[answers['purpose']] || ''}</span>
-                            <span class="summary-tag">${styleLabels[answers['style']] || ''}</span>
+                            <span class="summary-tag">${troubleLabels[answers['trouble']] || ''}</span>
+                            <span class="summary-tag">${mbtiLabels[answers['mbti']] || ''}</span>
+                            <span class="summary-tag">${wishLabels[answers['wish']] || ''}</span>
                         </div>
                     </div>
                     ${topProducts.map((p, i) => `
