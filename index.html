@@ -291,6 +291,36 @@
             color: var(--text-light);
         }
 
+        /* Collapsible section */
+        .more-products-toggle {
+            background: var(--bg);
+            border: 1.5px dashed var(--accent-light);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .more-products-toggle:hover { background: #faf6ef; }
+        .more-products-toggle .arrow { display: inline-block; transition: transform 0.3s; }
+        .more-products-toggle .arrow.open { transform: rotate(180deg); }
+        .more-products-list {
+            display: none;
+            margin-top: 12px;
+        }
+        .more-products-list.show { display: block; }
+        .more-products-list .result-card {
+            border: 1px solid #e8e4df;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
         /* Loading / Animation Page */
         .loading-overlay {
             position: fixed;
@@ -843,8 +873,13 @@
 
             // 排序取前 3
             const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-            const topIds = sorted.filter(s => s[1] > 0).slice(0, 3).map(s => s[0]);
+            const allSorted = sorted.filter(s => s[1] > 0);
+            const topIds = allSorted.slice(0, 3).map(s => s[0]);
             const topProducts = topIds.map(id => products.find(p => p.id === id));
+            const restProducts = allSorted.slice(3).map(s => products.find(p => p.id === s[0]));
+
+            // 存储所有商品供折叠使用
+            window._restProducts = restProducts;
 
             // 获取用户画像
             const troubleLabels = { 'anxiety': '情绪敏感', 'money': '求财心切', 'obstacle': '阻力较大', 'lost': '方向迷茫', 'tired': '身心疲惫' };
@@ -879,6 +914,23 @@
                             </div>
                         </div>
                     `).join('')}
+                    ${restProducts.length > 0 ? `
+                        <div class="more-products-toggle" onclick="toggleMoreProducts()">
+                            <span class="arrow">▼</span> 查看更多商品
+                        </div>
+                        <div class="more-products-list" id="moreProductsList">
+                            ${restProducts.map(p => `
+                                <div class="result-card">
+                                    <img class="card-image" src="${p.image}" alt="${p.name}">
+                                    <div class="card-body">
+                                        <h3>${p.name}</h3>
+                                        <div class="material">材质：${p.material}</div>
+                                        <div class="desc">${p.desc}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
                     <button class="btn" onclick="restart()" style="margin-top: 16px;">重新测试</button>
                     <div class="share-tip">
                         分享给朋友，一起找到专属水晶吧 💎
@@ -892,6 +944,19 @@
             answers = {};
             document.getElementById('result').classList.remove('active');
             document.getElementById('landing').classList.add('active');
+        }
+
+        function toggleMoreProducts() {
+            const list = document.getElementById('moreProductsList');
+            const toggle = document.querySelector('.more-products-toggle');
+            const arrow = toggle.querySelector('.arrow');
+            if (list.classList.contains('show')) {
+                list.classList.remove('show');
+                toggle.innerHTML = '<span class="arrow">▼</span> 查看更多商品';
+            } else {
+                list.classList.add('show');
+                toggle.innerHTML = '<span class="arrow open">▲</span> 收起';
+            }
         }
     </script>
 </body>
