@@ -115,68 +115,13 @@
             max-width: 280px;
         }
 
-        /* Fortune stick container */
-        .fortune-stick {
-            position: relative;
-            width: 100px;
-            height: 130px;
-            margin: 0 auto 16px;
-        }
-        .fortune-stick .stick-body {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 28px;
-            height: 90px;
-            background: linear-gradient(135deg, #c9a96e 0%, #a8894a 100%);
-            border-radius: 6px 6px 4px 4px;
-            box-shadow: 0 2px 8px rgba(201,169,110,0.3);
-        }
-        .fortune-stick .stick-body::after {
-            content: '签';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 700;
-        }
-        .fortune-stick .stick-top {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 18px;
-            height: 45px;
-            background: linear-gradient(135deg, #e8d5b0 0%, #c9a96e 100%);
-            border-radius: 4px 4px 0 0;
-            animation: stickShake 2s ease-in-out infinite;
-            transform-origin: bottom center;
-        }
-        @keyframes stickShake {
-            0%, 100% { transform: translateX(-50%) rotate(-3deg); }
-            50% { transform: translateX(-50%) rotate(3deg); }
-        }
-        .fortune-stick .stick-label {
-            position: absolute;
-            bottom: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.7rem;
-            color: var(--accent);
-            white-space: nowrap;
-            letter-spacing: 2px;
-        }
-
         .landing .benefits {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 16px;
             margin-bottom: 24px;
             width: 100%;
+            max-width: 280px;
         }
         .landing .benefits .item {
             display: flex;
@@ -184,6 +129,7 @@
             gap: 6px;
             font-size: 0.78rem;
             color: var(--text);
+            justify-content: center;
         }
         .landing .benefits .item .icon {
             font-size: 1.1rem;
@@ -533,7 +479,7 @@
             .landing .logo-big { width: 140px; margin-bottom: 16px; }
             .landing .brand-big { font-size: 2rem; }
             .landing .tagline { font-size: 1rem; margin-bottom: 28px; }
-            .landing .benefits { gap: 14px 24px; }
+            .landing .benefits { gap: 14px 24px; max-width: 320px; }
             .landing .benefits .item { font-size: 0.95rem; }
             .btn { padding: 16px 48px; font-size: 1rem; width: auto; }
             .question-card { padding: 24px 20px; }
@@ -575,13 +521,6 @@
                 <img class="logo-big" src="logo.jpg" alt="FUFU来财">
                 <div class="brand-big">FUFU来财</div>
                 <div class="tagline">用对水晶，好运自来</div>
-
-                <!-- Fortune stick animation -->
-                <div class="fortune-stick">
-                    <div class="stick-top"></div>
-                    <div class="stick-body"></div>
-                    <div class="stick-label">—— 求一支上上签 ——</div>
-                </div>
 
                 <div class="intro">
                     每一颗水晶都有独特的能量<br>
